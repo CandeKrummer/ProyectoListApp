@@ -1,6 +1,8 @@
 {
   "dependencies": {
-    "express": "^4.18.1"
+    "express": "^4.18.1",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.19.0"
   },
   "name": "proyectolistapp",
   "version": "1.0.0",
@@ -8,7 +10,6 @@
   "directories": {
     "test": "test"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,5 +23,9 @@
     "url": "https://github.com/CandeKrummer/ProyectoListApp/issues"
   },
   "homepage": "https://github.com/CandeKrummer/ProyectoListApp#readme",
-  "description": ""
+  "keywords": [],
+  "description": "",
+  "devDependencies": {
+    "sequelize-cli": "^6.4.1"
+  }
 }
