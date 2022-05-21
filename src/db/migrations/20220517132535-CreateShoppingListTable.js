@@ -12,35 +12,31 @@ module.exports = {
       },
 
       name: {
-        type: Sequelize.Datatypes.STRING(50),
-        allowNull: true,
-      },
-
-      category: {
-        type: Sequelize.Datatypes.ENUM('stock, currentShoppingList, usedList, favouriteList'), //discutir nombres
-        defaultValue: 'currentShoppingList',
+        type: Sequelize.DataTypes.STRING(50),
         allowNull: false,
       },
 
+      // listCategoryId: {
+      //   type: Sequelize.INTEGER,
+      //   defaultValue: 1,
+      //   allowNull: false,
+      // },
+
       createdAt: {
-        type: Sequelize.Datatypes.DATE,
-        defaultValue: Sequelize.Datatypes.NOW,
+        type: Sequelize.DataTypes.DATE,
+        defaultValue: Sequelize.DataTypes.NOW,
       },
 
       updatedAt: {
-        type: Sequelize.Datatypes.DATE,
-        defaultValue: Sequelize.Datatypes.NOW,
+        type: Sequelize.DataTypes.DATE,
+        defaultValue: Sequelize.DataTypes.NOW,
       },
     });
 
   },
 
   async down(queryInterface, Sequelize) {
-    /**
-     * Add reverting commands here.
-     *
-     * Example:
-     * await queryInterface.dropTable('users');
-     */
+    await queryInterface.dropTable('shoppingList');
+
   }
 };
