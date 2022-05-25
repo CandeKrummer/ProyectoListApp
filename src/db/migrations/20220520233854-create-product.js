@@ -3,28 +3,53 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Products', {
       id: {
-        allowNull: false,
-        autoIncrement: true,
+        type: Sequelize.INTEGER,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        autoIncrement: true,
+        allowNull: false,
       },
+
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.DataTypes.STRING(150),
+        allowNull: false,
       },
+
       brand: {
-        type: Sequelize.STRING
+        type: Sequelize.DataTypes.STRING(100),
+        allowNull: true,
       },
+
       price: {
-        type: Sequelize.DOUBLE
+        type: Sequelize.DataTypes.DOUBLE,
+        allowNull: false,
       },
+
+      content: {
+        type: Sequelize.DataTypes.DOUBLE,
+        allowNull: false,
+      },
+
+      contentMeassureId: {
+        type: Sequelize.INTEGER,
+        defaultValue: 1,
+        allowNull: false,
+      },
+
+      productCategoryId: {
+        type: Sequelize.INTEGER,
+        defaultValue: 1,
+        allowNull: false,
+      },
+
       createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DataTypes.DATE,
+        defaultValue: Sequelize.DataTypes.NOW,
       },
+
       updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DataTypes.DATE,
+        defaultValue: Sequelize.DataTypes.NOW,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
