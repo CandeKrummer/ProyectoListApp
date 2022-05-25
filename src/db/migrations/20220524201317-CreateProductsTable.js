@@ -26,11 +26,11 @@ module.exports = {
         allowNull: false,
       },
 
-      /*productCategoryId: {
+      productCategoryId: {
         type: Sequelize.INTEGER,
         defaultValue: 1,
         allowNull: false,
-      },*/
+      },
 
       createdAt: {
         type: Sequelize.DataTypes.DATE,
