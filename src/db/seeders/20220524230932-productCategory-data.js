@@ -5,18 +5,12 @@ module.exports = {
     let listaCategorias = [
       {
         category: 'Alacena',
-        createdAt: new Date(),
-        updatedAt: new Date()
       },
       {
         category: 'Heladera',
-        createdAt: new Date(),
-        updatedAt: new Date()
       },
       {
         category: 'Congelados',
-        createdAt: new Date(),
-        updatedAt: new Date()
       }
     ]
 

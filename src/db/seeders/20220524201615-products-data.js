@@ -8,6 +8,8 @@ module.exports = {
         name: 'Aceite Girasol',
         brand: 'Alsamar',
         price: 256.35,
+        content: 1.5,
+        contentMeassureId: 3, //lt
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -15,6 +17,8 @@ module.exports = {
         name: 'Agua Mineral Sin Gas',
         brand: 'Eco de los Andes',
         price: 73.50,
+        content: 500,
+        contentMeassureId: 2, //ml
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -22,6 +26,8 @@ module.exports = {
         name: 'Alfajor Chocolate',
         brand: 'Jorgito',
         price: 191.16,
+        content: 6,
+        contentMeassureId: 1, //unidades
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -29,6 +35,8 @@ module.exports = {
         name: 'Arroz Integral',
         brand: 'Gallo',
         price: 202.36,
+        content: 1,
+        contentMeassureId: 4, //kg
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -36,6 +44,8 @@ module.exports = {
         name: 'Cereales Copos de Maíz con Azúcar',
         brand: 'Zucaritas',
         price: 201.34,
+        content: 500,
+        contentMeassureId: 5, //gr
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -43,6 +53,9 @@ module.exports = {
         name: 'Crema de Leche Clásica',
         brand: 'La Serenísima',
         price: 344.53,
+        content: 520,
+        contentMeassureId: 6, //cc
+        productCategoryId: 2,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -50,6 +63,9 @@ module.exports = {
         name: 'Fideos Coditos',
         brand: 'Marolio',
         price: 74.31,
+        content: 500,
+        contentMeassureId: 5, //gr
+        productCategoryId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -57,6 +73,8 @@ module.exports = {
         name: 'Galletitas Dulces Clásicas',
         brand: 'Chocolina',
         price: 71.47,
+        content: 100,
+        contentMeassureId: 5, //gr
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -64,6 +82,9 @@ module.exports = {
         name: 'Muzzarella',
         brand: 'La Paulina',
         price: 924.38,
+        content: 1,
+        contentMeassureId: 4, //kg
+        productCategoryId: 3,
         createdAt: new Date(),
         updatedAt: new Date()
       },
