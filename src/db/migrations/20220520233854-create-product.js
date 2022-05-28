@@ -32,13 +32,11 @@ module.exports = {
       contentMeassureId: {
         type: Sequelize.INTEGER,
         defaultValue: 1,
-        allowNull: false,
       },
 
       productCategoryId: {
         type: Sequelize.INTEGER,
         defaultValue: 1,
-        allowNull: false,
       },
 
       createdAt: {
