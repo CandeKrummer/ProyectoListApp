@@ -8,17 +8,27 @@ app.get('/', function (req, res) {
     res.send('hello')
 })
 
-app.get('/products', function (req, res) {
-    let data = await Product.findAll()
+///products?productCategoryId=1
+
+app.get('/products', async function (req, res) {
+    let q = {};
+
+    if (req.query.productCategoryId) {
+        q.productCategoryId = req.query.productCategoryId
+    }
+
+    let data = await Product.findAll({
+        where: q
+    })
     res.send(data)
 })
 
-app.get('/productCategory/:id', function (req, res) {
+app.get('/product-category/:id', async function (req, res) {
     let data = await ProductCategory.findByPk(req.params.id)
     res.send(data)
 })
 
-app.get('/productCategories', function (req, res) {
+app.get('/product-categories', async function (req, res) {
     let data = await ProductCategory.findAll()
 
     res.send(data)
