@@ -14,7 +14,15 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   ShoppingList.init({
-    name: DataTypes.STRING
+    name: {
+      type: DataTypes.STRING(150),
+      allowNull: false,
+    },
+    listCategoryId: {
+      type: DataTypes.INTEGER,
+      defaultValue: 1,
+      allowNull: false,
+    },
   }, {
     sequelize,
     modelName: 'ShoppingList',

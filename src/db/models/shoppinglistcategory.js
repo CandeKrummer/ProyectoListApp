@@ -14,7 +14,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   ShoppingListCategory.init({
-    category: DataTypes.STRING
+    category: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+    }
   }, {
     sequelize,
     modelName: 'ShoppingListCategory',

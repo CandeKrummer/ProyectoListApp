@@ -10,23 +10,38 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Product.hasOne(models.ProductCategory)
     }
   }
   Product.init({
     name: {
-      type: Sequelize.DataTypes.STRING(150),
+      type: DataTypes.STRING(150),
       allowNull: false,
     },
 
     brand: {
-      type: Sequelize.DataTypes.STRING(100),
+      type: DataTypes.STRING(100),
       allowNull: true,
     },
 
     price: {
-      type: Sequelize.DataTypes.DOUBLE,
+      type: DataTypes.DOUBLE,
       allowNull: false,
+    },
+
+    content: {
+      type: DataTypes.DOUBLE,
+      allowNull: false,
+    },
+
+    contentMeassureId: {
+      type: DataTypes.INTEGER,
+      defaultValue: 1,
+    },
+
+    productCategoryId: {
+      type: DataTypes.INTEGER,
+      defaultValue: 1,
     },
   }, {
     sequelize,
