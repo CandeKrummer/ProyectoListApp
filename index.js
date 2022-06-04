@@ -24,21 +24,20 @@ app.get('/products', async function (req, res) {
     res.send(data)
 })
 
+//   /shopping-list/1/products
 
 app.get('/shopping-list/:id/products', async function (req, res) {
     let data = {
-        shoppingListName: {},
+        shoppingListName: "",
         products: [],
     }
 
-    data.shoppingListName = await ListedProduct.findAll({
-        where: {
-            ShoppingListId: req.params.id
-        },
-        inlcude: ['ShoppingList'],
-    });
-
-    data.shoppingListName.forEach(lp => data.products.push(await Product.findByPk(lp.ProductId)));
+    data.productos = ShoppingList.findByPk(req.params.id, {
+        include: [{
+            model: Product,
+            /*             through: { attributes: ['name'] } */
+        }],
+    })
 
     res.send(data)
 })
