@@ -9,6 +9,7 @@ module.exports = {
         brand: 'Alsamar',
         price: 256.35,
         content: 1.5,
+        productCategoryId: 1,
         contentMeassureId: 3, //lt
         createdAt: new Date(),
         updatedAt: new Date()
@@ -18,7 +19,8 @@ module.exports = {
         brand: 'Eco de los Andes',
         price: 73.50,
         content: 500,
-        contentMeassureId: 2, //ml
+        productCategoryId: 2,
+        contentMeassureId: 2,       //ml
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -27,6 +29,7 @@ module.exports = {
         brand: 'Jorgito',
         price: 191.16,
         content: 6,
+        productCategoryId: 2,
         contentMeassureId: 1, //unidades
         createdAt: new Date(),
         updatedAt: new Date()
@@ -36,7 +39,8 @@ module.exports = {
         brand: 'Gallo',
         price: 202.36,
         content: 1,
-        contentMeassureId: 4, //kg
+        productCategoryId: 1,
+        contentMeassureId: 5, //kg
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -45,7 +49,8 @@ module.exports = {
         brand: 'Zucaritas',
         price: 201.34,
         content: 500,
-        contentMeassureId: 5, //gr
+        productCategoryId: 1,
+        contentMeassureId: 4, //gr
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -64,7 +69,7 @@ module.exports = {
         brand: 'Marolio',
         price: 74.31,
         content: 500,
-        contentMeassureId: 5, //gr
+        contentMeassureId: 4, //gr
         productCategoryId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -74,7 +79,8 @@ module.exports = {
         brand: 'Chocolina',
         price: 71.47,
         content: 100,
-        contentMeassureId: 5, //gr
+        contentMeassureId: 4, //gr
+        productCategoryId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -83,8 +89,8 @@ module.exports = {
         brand: 'La Paulina',
         price: 924.38,
         content: 1,
-        contentMeassureId: 4, //kg
-        productCategoryId: 3,
+        contentMeassureId: 5, //kg
+        productCategoryId: 2,
         createdAt: new Date(),
         updatedAt: new Date()
       },

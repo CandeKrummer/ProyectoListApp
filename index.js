@@ -1,8 +1,7 @@
 const express = require('express')
 const app = express()
 
-const { ShoppingList, Product, ProductCategory, ListedProduct } = require('./src/db/models')
-const listedproduct = require('./src/db/models/listedproduct')
+const { ShoppingList, Product, ProductCategory, ListedProduct, ProductMeassure } = require('./src/db/models')
 
 
 app.get('/', function (req, res) {
@@ -19,26 +18,48 @@ app.get('/products', async function (req, res) {
     }
 
     let data = await Product.findAll({
-        where: q
+        where: q,
+        include: //[
+        // {
+        //     model: ProductMeassure,
+        //     attributes: ["meassure"],
+        // },
+        {
+            model: ProductCategory,
+            attributes: ["category"],
+        }
+        //]
     })
     res.send(data)
 })
 
 //   /shopping-list/1/products
 
-app.get('/shopping-list/:id/products', async function (req, res) {
-    let data = {
-        shoppingListName: "",
-        products: [],
-    }
+app.get('/shopping-lists/:id/products', async function (req, res) {
 
-    data.productos = ShoppingList.findByPk(req.params.id, {
-        include: [{
-            model: Product,
-            /*             through: { attributes: ['name'] } */
-        }],
-    })
+    let data = await ShoppingList.findByPk(req.params.id, {
+        include: {
+            model: ListedProduct,
+            attributes: ["cantidad"],
+            include: {
+                model: Product,
+                attributes: ["name", "brand", "price", "content", "name"],
+                include: [
+                    // {
+                    //     model: ProductMeassure,
+                    //     attributes: ["meassure"],
+                    // },
+                    {
+                        model: ProductCategory,
+                        attributes: ["category"],
+                    }
 
+                ]
+            }
+
+        }
+    });
+    console.log(data.productos)
     res.send(data)
 })
 
@@ -52,24 +73,30 @@ app.post('/products', async function (req, res) {
     })
 })
 
-app.get('/product-category/:id', async function (req, res) {
-    let data = await ProductCategory.findByPk(req.params.id)
+app.get('/product-categories/:id', async function (req, res) {
+    let data = await ProductCategory.findByPk(req.params.id, {
+        attributes: ["category"],
+    })
     res.send(data)
 })
 
-app.get('/product-categories', async function (req, res) {
-    let data = await ProductCategory.findAll()
+app.get('/product-categories', async function (req, res,) {
+    let data = await ProductCategory.findAll({
+        attributes: ["category"],
+    })
 
     res.send(data)
 })
 
 app.get('/shopping-lists', async function (req, res) {
     let data = await ShoppingList.findAll()
+
     res.send(data)
 })
 
 app.get('/shopping-lists/:id', async function (req, res) {
     let data = await ShoppingList.findByPk(req.params.id)
+    console.log(data.listedproducts)
     res.send(data)
 })
 

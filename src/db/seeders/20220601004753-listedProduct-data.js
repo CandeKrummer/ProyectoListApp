@@ -5,28 +5,28 @@ module.exports = {
     let productosListados = [
       {
         shoppingListId: 1,
-        productId: 28,
+        productId: 1,
         cantidad: 3,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         shoppingListId: 1,
-        productId: 29,
+        productId: 2,
         cantidad: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         shoppingListId: 1,
-        productId: 30,
+        productId: 3,
         cantidad: 4,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         shoppingListId: 1,
-        productId: 31,
+        productId: 4,
         cantidad: 2,
         createdAt: new Date(),
         updatedAt: new Date()
