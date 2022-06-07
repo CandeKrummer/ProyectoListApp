@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 
-const { ShoppingList, Product, ProductCategory, ListedProduct, ContentMeassure, ShoppingListCategory } = require('./src/db/models')
+const { ShoppingList, Product, ProductCategory, ListedProduct, ContentMeassure, ShoppingListCategory, Family } = require('./src/db/models')
 
 
 app.get('/', function (req, res) {
@@ -132,6 +132,20 @@ app.get('/shopping-lists/:id', async function (req, res) {
     let data = await ShoppingList.findByPk(req.params.id)
     console.log(data.listedproducts)
     res.send(data)
+})
+
+app.post('/family', async function (req, res) {
+
+    Family.create({
+        name: req.body.name,
+        address: req.body.address,
+        number: req.body.number,
+        password: req.body.password
+    }).then(data => {
+        res.status(201).json({})
+    }).catch(err => {
+        res.status(422).json(err)
+    })
 })
 
 app.listen(3000)
