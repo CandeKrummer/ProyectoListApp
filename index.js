@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 
-const { ShoppingList, Product, ProductCategory, ListedProduct, ProductMeassure } = require('./src/db/models')
+const { ShoppingList, Product, ProductCategory, ListedProduct, ContentMeassure } = require('./src/db/models')
 
 
 app.get('/', function (req, res) {
@@ -18,17 +18,17 @@ app.get('/products', async function (req, res) {
     }
 
     let data = await Product.findAll({
+        attributes: ['id', 'name', 'brand', 'price', 'content'],
         where: q,
-        include: //[
-        // {
-        //     model: ProductMeassure,
-        //     attributes: ["meassure"],
-        // },
+        include: [{
+            model: ContentMeassure,
+            attributes: ["meassure"],
+        },
         {
             model: ProductCategory,
             attributes: ["category"],
-        }
-        //]
+
+        }]
     })
     res.send(data)
 })
