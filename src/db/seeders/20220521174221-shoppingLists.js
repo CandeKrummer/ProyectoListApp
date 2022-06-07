@@ -35,7 +35,7 @@ module.exports = {
         updatedAt: new Date,
       },
       {
-        name: 'Lista4',
+        name: 'Lista3',
         listCategoryId: 1,
         createdAt: new Date,
         updatedAt: new Date,
