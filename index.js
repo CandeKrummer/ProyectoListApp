@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 
-const { ShoppingList, Product, ProductCategory, ListedProduct, ContentMeassure } = require('./src/db/models')
+const { ShoppingList, Product, ProductCategory, ListedProduct, ContentMeassure, ShoppingListCategory } = require('./src/db/models')
 
 
 app.get('/', function (req, res) {
@@ -33,22 +33,23 @@ app.get('/products', async function (req, res) {
     res.send(data)
 })
 
-//   /shopping-list/1/products
-
-app.get('/shopping-lists/:id/products', async function (req, res) {
-
-    let data = await ShoppingList.findByPk(req.params.id, {
-        include: {
+app.get('/products-in-stock', async function (req, res) {
+    let stock = await ShoppingList.findByPk(5, {
+        include: [{
+            model: ShoppingListCategory,
+            attributes: ["category"]
+        },
+        {
             model: ListedProduct,
             attributes: ["cantidad"],
             include: {
                 model: Product,
-                attributes: ["name", "brand", "price", "content", "name"],
+                attributes: ["id", "name", "brand", "price", "content"],
                 include: [
-                    // {
-                    //     model: ProductMeassure,
-                    //     attributes: ["meassure"],
-                    // },
+                    {
+                        model: ContentMeassure,
+                        attributes: ["meassure"],
+                    },
                     {
                         model: ProductCategory,
                         attributes: ["category"],
@@ -57,9 +58,42 @@ app.get('/shopping-lists/:id/products', async function (req, res) {
                 ]
             }
 
-        }
+        }]
+    })
+    res.send(stock.ListedProducts)
+})
+
+//   /shopping-lists/1/products
+
+app.get('/shopping-lists/:id/products', async function (req, res) {
+
+    let data = await ShoppingList.findByPk(req.params.id, {
+        include: [
+            {
+                model: ShoppingListCategory,
+                attributes: ["category"]
+            },
+            {
+                model: ListedProduct,
+                attributes: ["cantidad"],
+                include: {
+                    model: Product,
+                    attributes: ["name", "brand", "price", "content"],
+                    include: [
+                        {
+                            model: ContentMeassure,
+                            attributes: ["meassure"],
+                        },
+                        {
+                            model: ProductCategory,
+                            attributes: ["category"],
+                        }
+
+                    ]
+                }
+
+            }]
     });
-    console.log(data.productos)
     res.send(data)
 })
 
