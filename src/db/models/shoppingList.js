@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       ShoppingList.hasMany(models.ListedProduct)
-      ShoppingList.belongsTo(models.ShoppingListCategory)
+      ShoppingList.belongsTo(models.ShoppingListCategory, { foreignKey: "listCategoryId", })
     }
   }
   ShoppingList.init({
