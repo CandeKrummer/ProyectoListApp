@@ -15,19 +15,19 @@ module.exports = (sequelize, DataTypes) => {
   }
   Family.init({
     name: {
-      type: Sequelize.STRING(200),
+      type: DataTypes.STRING(200),
       allowNull: false,
     },
     name: {
-      type: Sequelize.STRING(200),
+      type: DataTypes.STRING(200),
       allowNull: false,
     },
     number: {
-      type: Sequelize.STRING(20),
+      type: DataTypes.STRING(20),
       allowNull: true,
     },
     password: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
     },
   }, {
