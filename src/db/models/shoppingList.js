@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       ShoppingList.hasMany(models.ListedProduct)
-      ShoppingList.belongsTo(models.ShoppingListCategory, { foreignKey: "listCategoryId", })
+      ShoppingList.belongsTo(models.ShoppingListCategory, { foreignKey: "listCategoryId" })
+      ShoppingList.belongsTo(models.Family, { foreignKey: "familyId" })
     }
   }
   ShoppingList.init({
@@ -23,6 +24,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       defaultValue: 1,
       allowNull: false,
+    },
+    familyId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     },
   }, {
     sequelize,
