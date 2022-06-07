@@ -136,6 +136,16 @@ app.get('/shopping-lists/:id', async function (req, res) {
 
 app.post('/family', async function (req, res) {
 
+    let count = await Family.count({
+        where: {
+            name: req.body.name
+        }
+    })
+
+    if (count >= 1) {
+        return res.status(422).json({ message: 'FAMILY_EXISTS' })
+    }
+
     Family.create({
         name: req.body.name,
         address: req.body.address,

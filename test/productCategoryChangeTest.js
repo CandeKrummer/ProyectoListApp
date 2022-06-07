@@ -1,10 +1,10 @@
 
-const { default: axios } = require('axios');
+/* const { default: axios } = require('axios');
 const chai = require('chai');
 const chaiFetch = require('chai-fetch');
 chai.use(chaiFetch);
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+ app.use(express.json())
+app.use(express.urlencoded({ extended: true })) 
 
 
 const { assert } = chai;
@@ -24,5 +24,5 @@ describe('Product category change', (done) => {
             done()
         })
     })
-})
+}) */
 
