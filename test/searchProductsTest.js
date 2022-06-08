@@ -1,19 +1,18 @@
-
 const { default: axios } = require('axios');
 const chai = require('chai');
 const chaiFetch = require('chai-fetch');
 chai.use(chaiFetch);
 /*app.use(express.json())
-app.use(express.urlencoded({ extended: true })) */
+app.use(express.urlencoded({ extended: true }))*/
 
 
 const { assert } = chai;
 
-describe('Product category change', (done) => {
-    it('', () => {
+describe('Search Products', (done) => {
+    it('returns 201 if the search was successful', () => {
 
         axios({
-            method: 'post',
+            method: 'get',
             url: 'http://localhost:3000/products',
             data: { name: "", brand: "", }
         }).then(response => {
@@ -25,4 +24,3 @@ describe('Product category change', (done) => {
         })
     })
 })
-

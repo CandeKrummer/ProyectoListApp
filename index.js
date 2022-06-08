@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-
+const { Op } = require("sequelize");
 const { ShoppingList, Product, ProductCategory, ListedProduct } = require('./src/db/models')
 const listedproduct = require('./src/db/models/listedproduct')
 
@@ -11,7 +11,7 @@ app.get('/', function (req, res) {
 
 ///products?productCategoryId=1
 
-app.get('/products', async function (req, res) {
+/*app.get('/products', async function (req, res) {
     let q = {};
 
     if (req.query.productCategoryId) {
@@ -21,6 +21,38 @@ app.get('/products', async function (req, res) {
     let data = await Product.findAll({
         where: q
     })
+    res.send(data)
+})*/
+app.get('/products', async function (req, res) {
+    let q = {};
+    let data;
+    if (req.query.name) {
+        q.name = { [Op.substring] : req.query.name};
+    }
+    if (req.query.brand) {
+        q.brand = { [Op.substring] : req.query.brand};
+    }
+    if (req.query.price) {
+        if(req.query.price < 0)
+        {
+            req.query.price = req.query.price * -1; 
+        }
+        q.price = req.query.price
+    }
+    if(req.query.precioMin && req.query.precioMax) {
+        if(req.query.precioMin >= req.query.precioMax) {
+            q.price = { [Op.between] : [req.query.precioMax , req.query.precioMin ]}
+        }
+      q.price = { [Op.between] : [req.query.precioMin , req.query.precioMax ]}
+    } else if (req.query.precioMax && !req.query.precioMin) {
+         req.query.precioMin = 0; 
+         q.price = { [Op.between] : [req.query.precioMin , req.query.precioMax ]}
+     } else if ((req.query.precioMin && !req.query.precioMax)) {
+        q.price = { [Op.gte] : req.query.precioMin}
+     }
+    data = await Product.findAll({
+        where: q
+      });
     res.send(data)
 })
 
