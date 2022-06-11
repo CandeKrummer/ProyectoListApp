@@ -4,7 +4,8 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const { ShoppingList, Product, ProductCategory, ListedProduct, ProductMeassure } = require('./src/db/models')
+const { ShoppingList, Product, ProductCategory, ListedProduct, ProductMeassure } = require('./src/db/models');
+const req = require('express/lib/request');
 
 
 app.get('/', function (req, res) {
@@ -102,46 +103,38 @@ app.post('/products', async function (req, res) {
     console.log(res)
 })
 
-app.put('/listed-products', async function (req, res) {
-    console.log(req.body.ShoppingListId)
-    console.log(req.body.ProductId)
 
-    let count = await ListedProduct.count({
-        where: {
-            ShoppingListId: req.body.ShoppingListId,
-            ProductId: req.body.ProductId,
-        }
-    })
-    console.log('cantidad: ' + count)
-
-    if (count >= 1) {
-        let lp = await ListedProduct.findOne({
-            where: {
-                ShoppingListId: req.body.ShoppingListId,
-                ProductId: req.body.ProductId
-            }
-        })
-        lp.cantidad = lp.cantidad + req.body.cantidad;
-        await lp.save().then(data => {
-            res.status(204).json({ message: 'LISTED_PRODUCT_UPDATED' })
-        }).catch(err => {
-            res.status(422).json(err)
-        })
+app.patch('/listed-products/:id', async function (req, res) {
+    let lp = await ListedProduct.findByPk(req.params.id)
+    console.log(lp)
+    if (lp != undefined) {
+        console.log()
+        lp.cantidad += req.body.cantidad;
+        lp.save().
+            then(data => {
+                res.status(204).json({ message: 'LISTED_PRODUCT_UPDATED' })
+            }).catch(err => {
+                res.status(422).json(err)
+            })
     } else {
-        ListedProduct.create({
-            ShoppingListId: req.body.ShoppingListId,
-            ProductId: req.body.ProductId,
-            cantidad: req.body.cantidad,
-        }).then(data => {
-            res.status(201).json({ message: 'LISTED_PRODUCT_CREATED' })
-        }).catch(err => {
-            res.status(422).json(err)
-        })
+        return res.status(422).json(err);
     }
-
-
-
 })
+
+app.post('/listed-products', async function (req, res) {
+    ListedProduct.create({
+        ShoppingListId: req.body.ShoppingListId,
+        ProductId: req.body.ProductId,
+        cantidad: req.body.cantidad,
+    }).then(data => {
+        res.status(201).json({ listedProductId: data.id, message: 'LISTED_PRODUCT_CREATED' })
+
+    }).catch(err => {
+        res.status(422).json(err)
+    })
+})
+
+
 app.post('/shopping-lists', async function (req, res) {
     console.log(req.body.name)
     console.log(req.body.listCategoryId)
