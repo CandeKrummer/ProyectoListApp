@@ -133,24 +133,26 @@ app.post('/products', async function (req, res) {
 
 app.patch('/listed-products/:id', async function (req, res) {
     let cantidad = req.body.cantidad
+    let actualQuantity;
     let lp;
-
-    if (cantidad < 0) {
-        cantidad = cantidad * (-1)
-    }
-
-    if (cantidad == 0) {
-        return res.status(422).json({ message: 'INVALID_QUANTITY' })
-    }
 
     lp = await ListedProduct.findByPk(req.params.id)
 
     if (lp != undefined) {
+        actualQuantity = lp.cantidad
+        if (cantidad < 0) {
+            if ((cantidad * (-1)) >= actualQuantity) {
+                return res.status(422).json({ message: 'INVALID_QUANTITY' })
+            }
+        }
 
+        if (cantidad == 0) {
+            return res.status(422).json({ message: 'INVALID_QUANTITY_0_IS_NOT_VALID' })
+        }
         lp.cantidad += cantidad;
         lp.save().
             then(data => {
-                res.status(204).json({ message: 'LISTED_PRODUCT_UPDATED' })
+                res.status(204).json({})
             }).catch(err => {
                 res.status(422).json(err)
             })
@@ -163,7 +165,7 @@ app.post('/listed-products', async function (req, res) {
     let listId = req.body.ShoppingListId
     let prodId = req.body.ProductId
     let cantidad = req.body.cantidad
-    console.log(prodId)
+
     if (cantidad < 0) {
         cantidad = cantidad * (-1)
     }
