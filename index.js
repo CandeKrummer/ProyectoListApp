@@ -163,7 +163,7 @@ app.post('/listed-products', async function (req, res) {
     let listId = req.body.ShoppingListId
     let prodId = req.body.ProductId
     let cantidad = req.body.cantidad
-
+    console.log(prodId)
     if (cantidad < 0) {
         cantidad = cantidad * (-1)
     }
@@ -181,13 +181,23 @@ app.post('/listed-products', async function (req, res) {
         return res.status(422).json({ message: 'UNDEFINED_LIST' })
     }
 
-    count = await Product.count({
+    let cant = await Product.count({
         where: {
             id: prodId,
         }
     })
-    if (count == 0) {
+    if (cant == 0) {
         return res.status(422).json({ message: 'UNDEFINED_PRODUCT' })
+    }
+
+    count = await ListedProduct.count({
+        where: {
+            ProductId: prodId,
+            ShoppingListId: listId,
+        }
+    })
+    if (count > 0) {
+        return res.status(422).json({ message: 'LISTED_PRODUCT_ALREADY_EXISTS' })
     }
 
     ListedProduct.create({
