@@ -10,8 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Product.hasMany(models.ListedProduct),
-        Product.belongsTo(models.ProductCategory)
+      Product.hasMany(models.ListedProduct)
+      Product.belongsTo(models.ProductCategory)
+      Product.belongsTo(models.ContentMeassure)
       //  Product.belongsTo(models.ProductMeassure, { foreignKey: "contentMeassureId" })
     }
   }
@@ -36,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
 
-    productCategoryId: {
+    contentMeassureId: {
       type: DataTypes.INTEGER,
       defaultValue: 1,
     },

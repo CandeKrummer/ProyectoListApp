@@ -20,7 +20,7 @@ module.exports = {
         price: 73.50,
         content: 500,
         productCategoryId: 2,
-        contentMeassureId: 2,       //ml
+        contentMeassureId: 2, //ml
         createdAt: new Date(),
         updatedAt: new Date()
       },

@@ -7,11 +7,13 @@ module.exports = {
       {
         name: 'Lista1',
         listCategoryId: 1,
+        familyId: 1,
         createdAt: new Date,
         updatedAt: new Date,
       },
       {
         name: 'Lista2',
+        familyId: 1,
         listCategoryId: 1,
         createdAt: new Date,
         updatedAt: new Date,
@@ -19,12 +21,14 @@ module.exports = {
       {
         name: 'Favorita mensual',
         listCategoryId: 2,
+        familyId: 2,
         createdAt: new Date,
         updatedAt: new Date,
       },
       {
         name: 'Compra marzo 2022',
         listCategoryId: 3,
+        familyId: 1,
         createdAt: new Date,
         updatedAt: new Date,
       },
@@ -35,8 +39,9 @@ module.exports = {
         updatedAt: new Date,
       },
       {
-        name: 'Lista4',
+        name: 'Lista3',
         listCategoryId: 1,
+        familyId: 2,
         createdAt: new Date,
         updatedAt: new Date,
       },

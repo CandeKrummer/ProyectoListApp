@@ -3,21 +3,20 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class ProductMeassure extends Model {
+  class ContentMeassure extends Model {
 
     static associate(models) {
-      //ProductMeassure.hasOne(models.Product)
-
+      ContentMeassure.hasOne(models.Product)
     }
   }
-  ProductMeassure.init({
+  ContentMeassure.init({
     maessure: {
       allowNull: false,
       type: DataTypes.STRING(50)
     },
   }, {
     sequelize,
-    modelName: 'ProductMeassure',
+    modelName: 'ContentMeassure',
   });
-  return ProductMeassure;
+  return ContentMeassure;
 };

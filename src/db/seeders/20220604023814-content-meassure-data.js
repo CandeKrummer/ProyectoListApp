@@ -3,7 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
 
-    await queryInterface.bulkInsert('productMeassures', [
+    await queryInterface.bulkInsert('contentMeassures', [
       {
         meassure: 'unidades',
         createdAt: new Date,
@@ -40,7 +40,7 @@ module.exports = {
 
   async down(queryInterface, Sequelize) {
 
-    await queryInterface.bulkDelete('productMeassures', null, {});
+    await queryInterface.bulkDelete('contentMeassures', null, {});
 
   }
 };
