@@ -229,6 +229,7 @@ app.get('/shopping-lists/:id', async function (req, res) {
 })
 
 app.post('/family', async function (req, res) {
+    let idFamily;
 
     let count = await Family.count({
         where: {
@@ -244,12 +245,45 @@ app.post('/family', async function (req, res) {
         name: req.body.name,
         address: req.body.address,
         number: req.body.number,
-        password: req.body.password
+        password: req.body.password,
+        createdAt: new Date,
+        updatedAt: new Date,
     }).then(data => {
-        res.status(201).json({})
+        idFamily = data.id;
+        //Creo la lista de compras de la familia
+        ShoppingList.create({
+            name: 'Lista de Compras',
+            listCategoryId: 1,
+            familyId: data.id,
+            createdAt: new Date,
+            updatedAt: new Date,
+        }).then(data => {
+            console.log("se crea la lista")
+            //res.status(201).json({})
+        }).catch(err => {
+            res.status(422).json(err)
+        })
+
+        //Creo la alacena virtual de la familia
+        ShoppingList.create({
+            name: 'Alacena Virtual',
+            listCategoryId: 2,
+            familyId: data.id,
+            createdAt: new Date,
+            updatedAt: new Date,
+        }).then(data => {
+            console.log("se crea la alacena")
+            res.status(201).json({})
+        }).catch(err => {
+            res.status(422).json(err)
+        })
+        //res.status(201).json({})
     }).catch(err => {
         res.status(422).json(err)
     })
+
+
+
 })
 
 app.listen(3000)
