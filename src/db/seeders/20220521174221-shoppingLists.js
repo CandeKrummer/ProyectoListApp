@@ -5,20 +5,6 @@ module.exports = {
 
     await queryInterface.bulkInsert('shoppingLists', [
       {
-        name: 'Favorita mensual',
-        listCategoryId: 3,
-        familyId: 1,
-        createdAt: new Date,
-        updatedAt: new Date,
-      },
-      {
-        name: 'Compra marzo 2022',
-        listCategoryId: 4,
-        familyId: 1,
-        createdAt: new Date,
-        updatedAt: new Date,
-      },
-      {
         name: 'Stock',
         listCategoryId: 5,
         createdAt: new Date,
@@ -91,6 +77,20 @@ module.exports = {
         name: 'Alacena Virtual',
         listCategoryId: 2,
         familyId: 5,
+        createdAt: new Date,
+        updatedAt: new Date,
+      },
+      {
+        name: 'Favorita mensual',
+        listCategoryId: 3,
+        familyId: 1,
+        createdAt: new Date,
+        updatedAt: new Date,
+      },
+      {
+        name: 'Compra marzo 2022',
+        listCategoryId: 4,
+        familyId: 1,
         createdAt: new Date,
         updatedAt: new Date,
       },
