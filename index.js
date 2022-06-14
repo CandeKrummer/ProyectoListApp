@@ -3,6 +3,7 @@ const app = express()
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+const { Op } = require("sequelize");
 
 const { ShoppingList, Product, ProductCategory, ListedProduct, ContentMeassure, ShoppingListCategory, Family } = require('./src/db/models')
 
@@ -285,6 +286,24 @@ app.post('/family', async function (req, res) {
 
 
 })
+
+app.get('/family', async function (req, res) {
+    let q = {};
+    let data;
+    let trajoNombre = false;
+    if (req.query.name) {
+        q.name = { [Op.substring]: req.query.name };
+        trajoNombre = true;
+    }
+    data = await Family.findAll({
+        where: q
+    });
+    if (trajoNombre && data == 0) {
+        return res.status(422).json({ message: 'FAMILY_DOESNT_EXIST' })
+    }
+    res.send(data)
+})
+
 
 app.listen(3000)
 
