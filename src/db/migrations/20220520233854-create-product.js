@@ -25,13 +25,8 @@ module.exports = {
       },
 
       content: {
-        type: Sequelize.DataTypes.DOUBLE,
+        type: Sequelize.DataTypes.STRING(100),
         allowNull: false,
-      },
-
-      contentMeassureId: {
-        type: Sequelize.INTEGER,
-        defaultValue: 1,
       },
 
       productCategoryId: {

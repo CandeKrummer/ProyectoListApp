@@ -12,8 +12,6 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Product.hasMany(models.ListedProduct)
       Product.belongsTo(models.ProductCategory)
-      Product.belongsTo(models.ContentMeassure)
-      //  Product.belongsTo(models.ProductMeassure, { foreignKey: "contentMeassureId" })
     }
   }
   Product.init({
@@ -33,13 +31,8 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     content: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.STRING(100),
       allowNull: false,
-    },
-
-    contentMeassureId: {
-      type: DataTypes.INTEGER,
-      defaultValue: 1,
     },
 
     productCategoryId: {

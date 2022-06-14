@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 const { Op } = require("sequelize");
-const { ShoppingList, Product, ProductCategory, ListedProduct, ContentMeassure, ShoppingListCategory, Family } = require('./src/db/models')
+const { ShoppingList, Product, ProductCategory, ListedProduct, ShoppingListCategory, Family } = require('./src/db/models')
 
 
 app.get('/', function (req, res) {
@@ -69,7 +69,7 @@ app.get('/products', async function (req, res) {
 })
 
 app.get('/products-in-stock', async function (req, res) {
-    let stock = await ShoppingList.findByPk(5, {
+    let stock = await ShoppingList.findByPk(1, {
         include: [{
             model: ShoppingListCategory,
             attributes: ["category"]
@@ -81,10 +81,6 @@ app.get('/products-in-stock', async function (req, res) {
                 model: Product,
                 attributes: ["id", "name", "brand", "price", "content"],
                 include: [
-                    {
-                        model: ContentMeassure,
-                        attributes: ["meassure"],
-                    },
                     {
                         model: ProductCategory,
                         attributes: ["category"],
@@ -99,7 +95,6 @@ app.get('/products-in-stock', async function (req, res) {
 })
 
 //   /shopping-lists/1/products
-
 app.get('/shopping-lists/:id/products', async function (req, res) {
 
     let data = await ShoppingList.findByPk(req.params.id, {
@@ -115,10 +110,6 @@ app.get('/shopping-lists/:id/products', async function (req, res) {
                     model: Product,
                     attributes: ["name", "brand", "price", "content"],
                     include: [
-                        {
-                            model: ContentMeassure,
-                            attributes: ["meassure"],
-                        },
                         {
                             model: ProductCategory,
                             attributes: ["category"],
@@ -154,7 +145,6 @@ app.post('/products', async function (req, res) {
         price: req.body.price,
         content: req.body.content,
         productCategoryId: req.body.productCategoryId,
-        contentMeassureId: req.body.contentMeassureId,
     }).then(data => {
         res.status(201).json({ ProductId: data.id })
     }).catch(err => {
@@ -206,6 +196,7 @@ app.post('/listed-products', async function (req, res) {
         return res.status(422).json({ message: 'INVALID_QUANTITY' })
     }
 
+    console.log("ID DE LISTA" + listId);
     let count = await ShoppingList.count({
         where: {
             id: listId,
@@ -215,6 +206,7 @@ app.post('/listed-products', async function (req, res) {
         return res.status(422).json({ message: 'UNDEFINED_LIST' })
     }
 
+    console.log("ID DEL PRODUCTO" + prodId);
     let cant = await Product.count({
         where: {
             id: prodId,
@@ -383,6 +375,23 @@ app.get('/family', async function (req, res) {
     }
     res.send(data)
 })
+
+/* app.get('/realizar-compra', async function (req, res) {
+    let q = {};
+    let data;
+    let trajoNombre = false;
+    if (req.query.name) {
+        q.name = { [Op.substring]: req.query.name };
+        trajoNombre = true;
+    }
+    data = await Family.findAll({
+        where: q
+    });
+    if (trajoNombre && data == 0) {
+        return res.status(422).json({ message: 'FAMILY_DOESNT_EXIST' })
+    }
+    res.send(data)
+}) */
 
 
 app.listen(3000)

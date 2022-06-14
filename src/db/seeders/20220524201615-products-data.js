@@ -8,9 +8,8 @@ module.exports = {
         name: 'Aceite Girasol',
         brand: 'Alsamar',
         price: 256.35,
-        content: 1.5,
+        content: "1.5 lt",
         productCategoryId: 1,
-        contentMeassureId: 3, //lt
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -18,9 +17,8 @@ module.exports = {
         name: 'Agua Mineral Sin Gas',
         brand: 'Eco de los Andes',
         price: 73.50,
-        content: 500,
+        content: "500 ml",
         productCategoryId: 2,
-        contentMeassureId: 2, //ml
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -28,9 +26,8 @@ module.exports = {
         name: 'Alfajor Chocolate',
         brand: 'Jorgito',
         price: 191.16,
-        content: 6,
+        content: "6 unidades",
         productCategoryId: 2,
-        contentMeassureId: 1, //unidades
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -38,9 +35,8 @@ module.exports = {
         name: 'Arroz Integral',
         brand: 'Gallo',
         price: 202.36,
-        content: 1,
+        content: "1 kg",
         productCategoryId: 1,
-        contentMeassureId: 5, //kg
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -48,9 +44,8 @@ module.exports = {
         name: 'Cereales Copos de Maíz con Azúcar',
         brand: 'Zucaritas',
         price: 201.34,
-        content: 500,
+        content: "500 gr",
         productCategoryId: 1,
-        contentMeassureId: 4, //gr
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -58,8 +53,7 @@ module.exports = {
         name: 'Crema de Leche Clásica',
         brand: 'La Serenísima',
         price: 344.53,
-        content: 520,
-        contentMeassureId: 6, //cc
+        content: "520 cc",
         productCategoryId: 2,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -68,8 +62,7 @@ module.exports = {
         name: 'Fideos Coditos',
         brand: 'Marolio',
         price: 74.31,
-        content: 500,
-        contentMeassureId: 4, //gr
+        content: "500 gr",
         productCategoryId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -78,8 +71,7 @@ module.exports = {
         name: 'Galletitas Dulces Clásicas',
         brand: 'Chocolina',
         price: 71.47,
-        content: 100,
-        contentMeassureId: 4, //gr
+        content: "100 gr",
         productCategoryId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -88,8 +80,7 @@ module.exports = {
         name: 'Muzzarella',
         brand: 'La Paulina',
         price: 924.38,
-        content: 1,
-        contentMeassureId: 5, //kg
+        content: "1 kg",
         productCategoryId: 2,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -98,8 +89,7 @@ module.exports = {
         name: 'Mayonesa',
         brand: 'Natura',
         price: 273.08,
-        content: 1,
-        contentMeassureId: 950, //gr
+        content: "950 gr",
         productCategoryId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -108,8 +98,7 @@ module.exports = {
         name: 'Azucar',
         brand: 'Domino',
         price: 79.17,
-        content: 1,
-        contentMeassureId: 1, //kg
+        content: "1 kg",
         productCategoryId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -118,8 +107,7 @@ module.exports = {
         name: 'Budin de Vainilla',
         brand: '9 de Oro',
         price: 109.07,
-        content: 1,
-        contentMeassureId: 220, //gr
+        content: "220 gr",
         productCategoryId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -128,8 +116,7 @@ module.exports = {
         name: 'Yogur Bebible Vainilla',
         brand: 'Yogs',
         price: 208.12,
-        content: 1,
-        contentMeassureId: 900, //gr
+        content: "900 gr",
         productCategoryId: 2,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -138,8 +125,7 @@ module.exports = {
         name: 'Salchichas',
         brand: 'Vienissima',
         price: 245.79,
-        content: 12,
-        contentMeassureId: 450, //gr
+        content: "450 gr",
         productCategoryId: 2,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -148,8 +134,7 @@ module.exports = {
         name: 'Sal Fina',
         brand: 'Dos Anclas',
         price: 221.39,
-        content: 1,
-        contentMeassureId: 500, //gr
+        content: "500 gr",
         productCategoryId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -158,8 +143,7 @@ module.exports = {
         name: 'Ricota Magra',
         brand: 'Tregar',
         price: 199.59,
-        content: 1,
-        contentMeassureId: 300, //gr
+        content: "300 gr",
         productCategoryId: 2,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -168,8 +152,7 @@ module.exports = {
         name: 'Queso Rallado',
         brand: 'Armonia',
         price: 202.15,
-        content: 1,
-        contentMeassureId: 120, //gr
+        content: "120 gr",
         productCategoryId: 2,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -178,8 +161,7 @@ module.exports = {
         name: 'Leche Entera',
         brand: 'La Serenisima',
         price: 125.36,
-        content: 1,
-        contentMeassureId: 1, //lt
+        content: "1 lt",
         productCategoryId: 2,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -188,8 +170,7 @@ module.exports = {
         name: 'Helado de Palitos Frutilla',
         brand: 'Torpedo',
         price: 437.87,
-        content: 5,
-        contentMeassureId: 300, //gr
+        content: "300 gr",
         productCategoryId: 3,
         createdAt: new Date(),
         updatedAt: new Date()

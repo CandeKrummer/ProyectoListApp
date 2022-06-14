@@ -46,7 +46,6 @@ describe('Update listed product quantity', () => {
             price: 2000,
             content: 1,
             productCategoryId: 1,
-            productMeassureId: 1,
         }).then(response => {
             assert.equal(response.status, 201)
             prodId = response.data.ProductId
