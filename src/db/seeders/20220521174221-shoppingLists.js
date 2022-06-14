@@ -83,7 +83,7 @@ module.exports = {
       {
         name: 'Favorita mensual',
         listCategoryId: 3,
-        familyId: 1,
+        familyId: 2,
         createdAt: new Date,
         updatedAt: new Date,
       },

@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 const { Op } = require("sequelize");
-
 const { ShoppingList, Product, ProductCategory, ListedProduct, ContentMeassure, ShoppingListCategory, Family } = require('./src/db/models')
 
 
@@ -134,8 +133,6 @@ app.get('/shopping-lists/:id/products', async function (req, res) {
 })
 
 app.post('/products', async function (req, res) {
-    console.log(req.body.name)
-    console.log(req.body.price)
     let count = await Product.count({
 
         where: {
@@ -146,8 +143,6 @@ app.post('/products', async function (req, res) {
             productCategoryId: req.body.productCategoryId,
         }
     })
-
-    console.log('cantidad: ' + count)
     if (count >= 1) {
         return res.status(422).json({ message: 'PRODUCT_EXISTS' })
     }
@@ -161,73 +156,127 @@ app.post('/products', async function (req, res) {
         productCategoryId: req.body.productCategoryId,
         contentMeassureId: req.body.contentMeassureId,
     }).then(data => {
-        res.status(201).json({})
+        res.status(201).json({ ProductId: data.id })
     }).catch(err => {
-        console.log(err)
         res.status(422).json(err)
     })
-    console.log(res)
 })
 
-app.put('/listed-products', async function (req, res) {
-    console.log(req.body.ShoppingListId)
-    console.log(req.body.ProductId)
 
-    let count = await ListedProduct.count({
-        where: {
-            ShoppingListId: req.body.ShoppingListId,
-            ProductId: req.body.ProductId,
-        }
-    })
-    console.log('cantidad: ' + count)
+app.patch('/listed-products/:id', async function (req, res) {
+    let cantidad = req.body.cantidad
+    let actualQuantity;
+    let lp;
 
-    if (count >= 1) {
-        let lp = await ListedProduct.findOne({
-            where: {
-                ShoppingListId: req.body.ShoppingListId,
-                ProductId: req.body.ProductId
+    lp = await ListedProduct.findByPk(req.params.id)
+
+    if (lp != undefined) {
+        actualQuantity = lp.cantidad
+        if (cantidad < 0) {
+            if ((cantidad * (-1)) >= actualQuantity) {
+                return res.status(422).json({ message: 'INVALID_QUANTITY' })
             }
-        })
-        lp.cantidad = lp.cantidad + req.body.cantidad;
-        await lp.save().then(data => {
-            res.status(204).json({ message: 'LISTED_PRODUCT_UPDATED' })
-        }).catch(err => {
-            res.status(422).json(err)
-        })
+        }
+
+        if (cantidad == 0) {
+            return res.status(422).json({ message: 'INVALID_QUANTITY_0_IS_NOT_VALID' })
+        }
+        lp.cantidad += cantidad;
+        lp.save().
+            then(data => {
+                res.status(204).json({})
+            }).catch(err => {
+                res.status(422).json(err)
+            })
     } else {
-        ListedProduct.create({
-            ShoppingListId: req.body.ShoppingListId,
-            ProductId: req.body.ProductId,
-            cantidad: req.body.cantidad,
-        }).then(data => {
-            res.status(201).json({ message: 'LISTED_PRODUCT_CREATED' })
-        }).catch(err => {
-            res.status(422).json(err)
-        })
+        return res.status(422).json(err);
+    }
+})
+
+app.post('/listed-products', async function (req, res) {
+    let listId = req.body.ShoppingListId
+    let prodId = req.body.ProductId
+    let cantidad = req.body.cantidad
+
+    if (cantidad < 0) {
+        cantidad = cantidad * (-1)
     }
 
+    if (cantidad == 0) {
+        return res.status(422).json({ message: 'INVALID_QUANTITY' })
+    }
 
+    let count = await ShoppingList.count({
+        where: {
+            id: listId,
+        }
+    })
+    if (count == 0) {
+        return res.status(422).json({ message: 'UNDEFINED_LIST' })
+    }
 
+    let cant = await Product.count({
+        where: {
+            id: prodId,
+        }
+    })
+    if (cant == 0) {
+        return res.status(422).json({ message: 'UNDEFINED_PRODUCT' })
+    }
+
+    count = await ListedProduct.count({
+        where: {
+            ProductId: prodId,
+            ShoppingListId: listId,
+        }
+    })
+    if (count > 0) {
+        return res.status(422).json({ message: 'LISTED_PRODUCT_ALREADY_EXISTS' })
+    }
+
+    ListedProduct.create({
+        ShoppingListId: listId,
+        ProductId: prodId,
+        cantidad: cantidad,
+    }).then(data => {
+        res.status(201).json({ listedProductId: data.id, message: 'LISTED_PRODUCT_CREATED' })
+
+    }).catch(err => {
+        res.status(422).json(err)
+    })
 })
+
+/*
+app.post('/families', async function (req, res) {
+    Family.create({
+        name: req.body.name,
+        address: req.body.address,
+        number: req.body.number,
+        password: req.body.password
+    }).then(data => {
+        res.status(201).json({})
+    }).catch(err => {
+        res.status(422).json(err)
+    })
+
+})*/
+
 app.post('/shopping-lists', async function (req, res) {
-    console.log(req.body.name)
-    console.log(req.body.listCategoryId)
     let count = await ShoppingList.count({
         where: {
             name: req.body.name,
-            listCategoryId: req.body.listCategoryId,
-            //  familyId: req.body.familyId
+            familyId: req.body.familyId
         }
     })
-    console.log('cantidad: ' + count)
     if (count >= 1) {
         return res.status(422).json({ message: 'LIST_EXISTS' })
     }
     ShoppingList.create({
         name: req.body.name,
         listCategoryId: req.body.listCategoryId,
+        familyId: req.body.familyId,
     }).then(data => {
-        res.status(201).json({})
+        res.status(201).json({ shoppingListId: data.id })
     }).catch(err => {
         res.status(422).json(err)
     })
@@ -257,7 +306,6 @@ app.get('/shopping-lists', async function (req, res) {
 
 app.get('/shopping-lists/:id', async function (req, res) {
     let data = await ShoppingList.findByPk(req.params.id)
-    console.log(data.listedproducts)
     res.send(data)
 })
 
