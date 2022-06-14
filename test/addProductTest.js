@@ -47,7 +47,6 @@ describe('Add a product to a shopping list ', () => {
             price: 1000,
             content: 1,
             productCategoryId: 1,
-            productMeassureId: 1,
         }).then(response => {
             assert.equal(response.status, 201)
             prodId = response.data.ProductId
@@ -90,7 +89,6 @@ describe('Add a product to a shopping list ', () => {
             cantidad: 2
         }).catch(err => {
             assert.equal(err.response.data.message, 'UNDEFINED_PRODUCT')
-            console.log(err)
             done()
         })
     })
@@ -107,7 +105,6 @@ describe('Add a product to a shopping list ', () => {
             done()
         }).catch(err => {
             assert.equal(err.response.status, 422)
-            console.log(err.response.data.message)
             done()
         })
     })
