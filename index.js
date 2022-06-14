@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 const req = require('express/lib/request');
-const { ShoppingList, Product, ProductCategory, ListedProduct, ContentMeassure, ShoppingListCategory, Family } = require('./src/db/models')
+const { ShoppingList, Product, ProductCategory, ListedProduct, ContentMeassure, ShoppingListCategory, Family, User, FamilyUser } = require('./src/db/models')
 
 
 app.get('/', function (req, res) {
@@ -277,7 +277,7 @@ app.get('/shopping-lists/:id', async function (req, res) {
     res.send(data)
 })
 
-app.post('/family', async function (req, res) {
+app.post('/families', async function (req, res) {
 
     let count = await Family.count({
         where: {
@@ -295,7 +295,81 @@ app.post('/family', async function (req, res) {
         number: req.body.number,
         password: req.body.password
     }).then(data => {
-        res.status(201).json({})
+        res.status(201).json({ familyId: data.id })
+    }).catch(err => {
+        res.status(422).json(err)
+    })
+})
+
+
+app.post('/familyUsers', async function (req, res) {
+    let famId = req.body.familyId
+    let userId = req.body.userId
+    console.log(userId)
+    console.log(famId)
+
+    let count = await Family.count({
+        where: {
+            id: famId,
+        }
+    })
+    if (count == 0) {
+        return res.status(422).json({ message: 'FAMILY_DOESNT_EXIST' })
+    }
+
+    count = await User.count({
+        where: {
+            id: userId,
+        }
+    })
+    if (count == 0) {
+        return res.status(422).json({ message: 'USER_DOESNT_EXIST' })
+    }
+
+    count = await FamilyUser.count({
+        where: {
+            familyId: famId,
+            userId: userId,
+        }
+    })
+    console.log(count)
+    if (count > 0) {
+        return res.status(422).json({ message: 'ALREADY_JOINED_FAMILY' })
+    }
+
+
+    FamilyUser.create({
+        FamilyId: famId,
+        UserId: userId,
+    }).then(data => {
+        res.status(201).json({ familyUser: data.id })
+    }).catch(err => {
+        res.status(422).json(err)
+        console.log(err)
+    })
+})
+
+
+app.post('/users', async function (req, res) {
+    let userName = req.body.name
+    let userEmail = req.body.email
+    let userPassword = req.body.password
+
+    let count = await User.count({
+        where: {
+            email: userEmail,
+        }
+    })
+    if (count > 0) {
+        return res.status(422).json({ message: 'EMAIL_ALREADY_USED' })
+    }
+
+    User.create({
+        name: userName,
+        email: userEmail,
+        password: userPassword
+    }).then(data => {
+        res.status(201).json({ userId: data.id })
     }).catch(err => {
         res.status(422).json(err)
     })

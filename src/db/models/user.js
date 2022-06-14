@@ -3,32 +3,28 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Family extends Model {
+  class User extends Model {
 
     static associate(models) {
-      Family.belongsToMany(models.User, { through: models.FamilyUser })
+      User.belongsToMany(models.Family, { through: models.FamilyUser })
     }
   }
-  Family.init({
+  User.init({
     name: {
       type: DataTypes.STRING(200),
       allowNull: false,
     },
-    address: {
+    email: {
       type: DataTypes.STRING(200),
       allowNull: false,
     },
-    number: {
-      type: DataTypes.STRING(20),
-      allowNull: true,
-    },
     password: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(20),
       allowNull: false,
     },
   }, {
     sequelize,
-    modelName: 'Family',
+    modelName: 'User',
   });
-  return Family;
+  return User;
 };
