@@ -4,7 +4,10 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     let listaCategorias = [
       {
-        category: 'Lista Actual',
+        category: 'Lista de Compras',
+      },
+      {
+        category: 'Alacena Virtual',
       },
       {
         category: 'Compra favorita',
