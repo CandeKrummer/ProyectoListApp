@@ -94,6 +94,106 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
+      {
+        name: 'Mayonesa',
+        brand: 'Natura',
+        price: 273.08,
+        content: 1,
+        contentMeassureId: 950, //gr
+        productCategoryId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: 'Azucar',
+        brand: 'Domino',
+        price: 79.17,
+        content: 1,
+        contentMeassureId: 1, //kg
+        productCategoryId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: 'Budin de Vainilla',
+        brand: '9 de Oro',
+        price: 109.07,
+        content: 1,
+        contentMeassureId: 220, //gr
+        productCategoryId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: 'Yogur Bebible Vainilla',
+        brand: 'Yogs',
+        price: 208.12,
+        content: 1,
+        contentMeassureId: 900, //gr
+        productCategoryId: 2,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: 'Salchichas',
+        brand: 'Vienissima',
+        price: 245.79,
+        content: 12,
+        contentMeassureId: 450, //gr
+        productCategoryId: 2,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: 'Sal Fina',
+        brand: 'Dos Anclas',
+        price: 221.39,
+        content: 1,
+        contentMeassureId: 500, //gr
+        productCategoryId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: 'Ricota Magra',
+        brand: 'Tregar',
+        price: 199.59,
+        content: 1,
+        contentMeassureId: 300, //gr
+        productCategoryId: 2,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: 'Queso Rallado',
+        brand: 'Armonia',
+        price: 202.15,
+        content: 1,
+        contentMeassureId: 120, //gr
+        productCategoryId: 2,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: 'Leche Entera',
+        brand: 'La Serenisima',
+        price: 125.36,
+        content: 1,
+        contentMeassureId: 1, //lt
+        productCategoryId: 2,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: 'Helado de Palitos Frutilla',
+        brand: 'Torpedo',
+        price: 437.87,
+        content: 5,
+        contentMeassureId: 300, //gr
+        productCategoryId: 3,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
     ]
 
     return queryInterface.bulkInsert('Products', listaProductos);
