@@ -1,3 +1,4 @@
+
 const { default: axios } = require('axios');
 const chai = require('chai');
 const chaiFetch = require('chai-fetch');
@@ -11,7 +12,7 @@ const { assert } = chai;
 describe('Add Family', (done) => {
     it('returns 201 if the family was created', (done) => {
         axios.post(
-            'http://localhost:3000/family',
+            'http://localhost:3000/families',
             {
                 name: "Garcia",
                 address: "Pellerman 42",
@@ -33,7 +34,7 @@ describe('Add Family', (done) => {
     it('returns 422 if the family exists', (done) => {
 
         axios.post(
-            'http://localhost:3000/family',
+            'http://localhost:3000/families',
             {
                 name: "Garcia",
                 address: "Pellerman 42",
