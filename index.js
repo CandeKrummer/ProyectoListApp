@@ -321,23 +321,32 @@ app.post('/families', async function (req, res) {
         createdAt: new Date,
         updatedAt: new Date,
     }).then(data => {
-        idFamily = data.id;
+        let famId = data.id
         //Creo la lista de compras de la familia
         ShoppingList.create({
             name: 'Lista de Compras',
             listCategoryId: 1,
-            familyId: data.id,
+            familyId: famId,
             createdAt: new Date,
             updatedAt: new Date,
         }).then(data => {
-            console.log("se crea la lista")
-            //res.status(201).json({})
+            ShoppingList.create({
+                name: 'Alacena Virtual',
+                listCategoryId: 2,
+                familyId: famId,
+                createdAt: new Date,
+                updatedAt: new Date,
+            }).then(data => {
+                res.status(201).json({ familyId: famId })
+            }).catch(err => {
+                res.status(422).json(err)
+            })
         }).catch(err => {
             res.status(422).json(err)
         })
 
         //Creo la alacena virtual de la familia
-        ShoppingList.create({
+        /* ShoppingList.create({
             name: 'Alacena Virtual',
             listCategoryId: 2,
             familyId: data.id,
@@ -348,7 +357,7 @@ app.post('/families', async function (req, res) {
             res.status(201).json({})
         }).catch(err => {
             res.status(422).json(err)
-        })
+        }) */
         //res.status(201).json({})
     })
 })
