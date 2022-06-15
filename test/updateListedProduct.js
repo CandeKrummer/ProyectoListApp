@@ -11,7 +11,7 @@ Testea:
     restarse igual o más de la cantidad que ya tiene el producto listado.
     (Si la cantidad es 5, no se recibira   <= -5 )
 
-    -   
+    -
 */
 
 describe('Update listed product quantity', () => {
