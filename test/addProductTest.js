@@ -142,7 +142,27 @@ describe('Add a product to a shopping list ', () => {
         })
     })
 
+    it('returns 201 if list was destroyed', (done) => {
+        axios.delete(
+            'http://localhost:3000/shopping-lists/' + listId, {
+        }).then(response => {
+            assert.equal(response.status, 201)
+            done()
+        }).catch(err => {
+            assert.equal(err.response.status, 422)
+            done()
+        })
+    })
 
-
-
+    it('returns 422 if the list doesnt exist', (done) => {
+        axios.delete(
+            'http://localhost:3000/shopping-lists/' + 895, {
+        }).then(response => {
+            assert.equal(response.status, 201)
+            done()
+        }).catch(err => {
+            assert.equal(err.response.data.message, 'LIST_DOESNT_EXIST')
+            done()
+        })
+    })
 })

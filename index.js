@@ -238,21 +238,6 @@ app.post('/listed-products', async function (req, res) {
     })
 })
 
-/*
-app.post('/families', async function (req, res) {
-    Family.create({
-        name: req.body.name,
-        address: req.body.address,
-        number: req.body.number,
-        password: req.body.password
-    }).then(data => {
-        res.status(201).json({})
-    }).catch(err => {
-        res.status(422).json(err)
-    })
-
-})*/
-
 app.post('/shopping-lists', async function (req, res) {
     let count = await ShoppingList.count({
         where: {
@@ -344,21 +329,6 @@ app.post('/families', async function (req, res) {
         }).catch(err => {
             res.status(422).json(err)
         })
-
-        //Creo la alacena virtual de la familia
-        /* ShoppingList.create({
-            name: 'Alacena Virtual',
-            listCategoryId: 2,
-            familyId: data.id,
-            createdAt: new Date,
-            updatedAt: new Date,
-        }).then(data => {
-            console.log("se crea la alacena")
-            res.status(201).json({})
-        }).catch(err => {
-            res.status(422).json(err)
-        }) */
-        //res.status(201).json({})
     })
 })
 
@@ -453,6 +423,26 @@ app.get('/family', async function (req, res) {
         return res.status(422).json({ message: 'FAMILY_DOESNT_EXIST' })
     }
     res.send(data)
+})
+
+app.delete('/shopping-lists/:id', async function (req, res) {
+    ShoppingList.destroy({
+        where: {
+            id: req.params.id,
+        }
+    }).then(data => {
+        ListedProduct.destroy({
+            where: {
+                ShoppingListId: req.params.id,
+            }
+        }).then(data => {
+            res.status(201).json({})
+        }).catch(err => {
+            res.status(422).json(err)
+        })
+    }).catch(err => {
+        res.status(422).json({ message: 'LIST_DOESNT_EXIST' })
+    })
 })
 
 /* app.get('/realizar-compra', async function (req, res) {
