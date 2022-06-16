@@ -462,6 +462,15 @@ app.delete('/shopping-lists/:id', async function (req, res) {
     res.send(data)
 }) */
 
+app.get('/virtual-cupboard', async function (req, res) {
+    let q = {}; 
+    q.familyId = req.query.familyId; 
+    q.name = 'Alacena Virtual';
+   let data = await  ShoppingList.findAll({
+        where: q
+    });
+    res.send(data)
+})
 
 app.listen(3000)
 
