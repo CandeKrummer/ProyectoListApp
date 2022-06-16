@@ -446,6 +446,51 @@ app.delete('/shopping-lists/:id', async function (req, res) {
     })
 })
 
+
+app.delete('/listed-products/:id', async function (req, res) {
+
+    let listedProd = await ListedProduct.findByPk(req.params.id)
+    if (listedProd == undefined) {
+        res.status(422).json({ message: 'LISTED_PRODUCT_NOT_FOUND' })
+    } else {
+        await listedProd.destroy()
+            .then(data => {
+                res.status(200).json({})
+            }).catch(err => {
+                res.status(422).json({})
+            })
+    }
+})
+
+app.delete('/products/:id', async function (req, res) {
+    let prodId = req.params.id
+
+    let product = await Product.findByPk(prodId)
+    if (product == undefined) {
+        res.status(422).json({ message: 'PRODUCT_DOES_NOT_EXIST' })
+    } else {
+        product.destroy({
+            where: {
+                id: prodId,
+            }
+        }).then(data => {
+            ListedProduct.destroy({
+                where: {
+                    ProductId: prodId,
+                }
+            }).then(data => {
+                res.status(200).json({})
+            }).catch(err => {
+                res.status(422).json(err)
+                console.log(err)
+            })
+        }).catch(err => {
+            res.status(422).json()
+        })
+    }
+
+})
+
 /* app.get('/realizar-compra', async function (req, res) {
     let q = {};
     let data;
