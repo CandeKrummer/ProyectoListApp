@@ -154,14 +154,14 @@ describe('Add a product to a shopping list ', () => {
         })
     })
 
-    it('returns 422 if the list doesnt exist', (done) => {
+    it('returns 200 if product was deleted', (done) => {
         axios.delete(
-            'http://localhost:3000/shopping-lists/' + 895, {
+            'http://localhost:3000/products/' + prodId, {
         }).then(response => {
-            assert.equal(response.status, 201)
+            assert.equal(response.status, 200)
             done()
         }).catch(err => {
-            assert.equal(err.response.data.message, 'LIST_DOESNT_EXIST')
+            assert.equal(err.response.status, 422)
             done()
         })
     })

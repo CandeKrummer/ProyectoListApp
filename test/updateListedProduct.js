@@ -11,7 +11,10 @@ Testea:
     restarse igual o más de la cantidad que ya tiene el producto listado.
     (Si la cantidad es 5, no se recibira   <= -5 )
 
-    -
+    - No se actualiza un producto listado si se pasa 0 como cantidad
+
+    - Se borra el ListedProduct pasando su Id y rechaza solicitudes para borrar
+    si el Id proporcionado no pertenece a ningún registro
 */
 
 describe('Update listed product quantity', () => {
@@ -127,4 +130,50 @@ describe('Update listed product quantity', () => {
 
     //final quantity: 4
 
+    it('returns 200 if the listedProduct was deleted', (done) => {
+        axios.delete(
+            'http://localhost:3000/listed-products/' + listedProdId, {
+        }).then(response => {
+            assert.equal(response.status, 200)
+            done()
+        }).catch(err => {
+            assert.equal(err.response.status, 422)
+            done()
+        })
+    })
+
+    it('returns 422 if it tries to delete a nonexistent listedProduct', (done) => {
+        axios.delete(
+            'http://localhost:3000/listed-products/' + listedProdId, {
+        }).then(response => {
+            assert.equal(response.status, 200)
+            done()
+        }).catch(err => {
+            done()
+        })
+    })
+
+    it('returns 201 if list was destroyed', (done) => {
+        axios.delete(
+            'http://localhost:3000/shopping-lists/' + listId, {
+        }).then(response => {
+            assert.equal(response.status, 201)
+            done()
+        }).catch(err => {
+            assert.equal(err.response.status, 422)
+            done()
+        })
+    })
+
+    it('returns 200 if product was deleted', (done) => {
+        axios.delete(
+            'http://localhost:3000/products/' + prodId, {
+        }).then(response => {
+            assert.equal(response.status, 200)
+            done()
+        }).catch(err => {
+            assert.equal(err.response.status, 422)
+            done()
+        })
+    })
 })
