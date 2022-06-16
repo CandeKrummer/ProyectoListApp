@@ -47,4 +47,28 @@ describe('Add Family', (done) => {
             done()
         })
     })
+
+    // eliminar familia
+    it('returns 201 if the family was deleted', () => {
+        axios.delete(
+            'http://localhost:3000/families/' + 5, {
+        }).then(response => {
+            assert.equal(response.status, 201)
+            done()
+        }).catch(err => {
+            assert.equal(err.response.status, 422)
+            done()
+        })
+    })
+    it('returns 422 if the family doesnt exist', () => {
+        axios.delete(
+            'http://localhost:3000/families/' + 748, {
+        }).then(response => {
+            assert.equal(response.status, 201)
+            done()
+        }).catch(err => {
+            assert.equal(err.response.data.message, 'FAMILY_DOESNT_EXIST')
+            done()
+        })
+    })
 })
