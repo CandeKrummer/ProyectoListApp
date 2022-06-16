@@ -99,10 +99,6 @@ describe('Add a product to a shopping list ', () => {
             ShoppingListId: listId,
             ProductId: prodId,
             cantidad: 0
-        }).then(response => {
-            listedProdId = response.data.listedProductId
-            assert.equal(response.status, 201)
-            done()
         }).catch(err => {
             assert.equal(err.response.status, 422)
             done()
@@ -132,10 +128,6 @@ describe('Add a product to a shopping list ', () => {
             ShoppingListId: listId,
             ProductId: prodId,
             cantidad: 3
-        }).then(response => {
-            listedProdId = response.data.listedProductId
-            assert.equal(response.status, 201)
-            done()
         }).catch(err => {
             assert.equal(err.response.status, 422)
             done()
@@ -162,6 +154,15 @@ describe('Add a product to a shopping list ', () => {
             done()
         }).catch(err => {
             assert.equal(err.response.status, 422)
+            done()
+        })
+    })
+
+    it('returns 422 if the product meant to be deleted doesn´t exist', (done) => {
+        axios.delete(
+            'http://localhost:3000/products/' + prodId, {
+        }).catch(err => {
+            assert.equal(err.response.data.message, 'PRODUCT_DOES_NOT_EXIST')
             done()
         })
     })

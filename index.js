@@ -464,24 +464,30 @@ app.delete('/listed-products/:id', async function (req, res) {
 app.delete('/products/:id', async function (req, res) {
     let prodId = req.params.id
 
-    Product.destroy({
-        where: {
-            id: prodId,
-        }
-    }).then(data => {
-        ListedProduct.destroy({
+    let product = await Product.findByPk(prodId)
+    if (product == undefined) {
+        res.status(422).json({ message: 'PRODUCT_DOES_NOT_EXIST' })
+    } else {
+        product.destroy({
             where: {
-                ProductId: prodId,
+                id: prodId,
             }
         }).then(data => {
-            res.status(200).json({})
+            ListedProduct.destroy({
+                where: {
+                    ProductId: prodId,
+                }
+            }).then(data => {
+                res.status(200).json({})
+            }).catch(err => {
+                res.status(422).json(err)
+                console.log(err)
+            })
         }).catch(err => {
-            res.status(422).json(err)
-            console.log(err)
+            res.status(422).json()
         })
-    }).catch(err => {
-        res.status(422).json({ message: 'PRODUCT_DOES_NOT_EXIST' })
-    })
+    }
+
 })
 
 /* app.get('/realizar-compra', async function (req, res) {
