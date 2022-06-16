@@ -426,14 +426,14 @@ app.get('/family', async function (req, res) {
 })
 
 app.delete('/shopping-lists/:id', async function (req, res) {
-    ShoppingList.destroy({
+    Family.destroy({
         where: {
             id: req.params.id,
         }
     }).then(data => {
-        ListedProduct.destroy({
+        FamilyUser.destroy({
             where: {
-                ShoppingListId: req.params.id,
+                familyId: req.params.id,
             }
         }).then(data => {
             res.status(201).json({})
@@ -441,10 +441,9 @@ app.delete('/shopping-lists/:id', async function (req, res) {
             res.status(422).json(err)
         })
     }).catch(err => {
-        res.status(422).json({ message: 'LIST_DOESNT_EXIST' })
+        res.status(422).json({ message: 'FAMILY_DOESNT_EXIST' })
     })
 })
-
 /* app.get('/realizar-compra', async function (req, res) {
     let q = {};
     let data;
@@ -462,6 +461,24 @@ app.delete('/shopping-lists/:id', async function (req, res) {
     res.send(data)
 }) */
 
-
+app.delete('/families/:id', async function (req, res) {
+    Family.destroy({
+        where: {
+            id: req.params.id,
+        }
+    }).then(data => {
+        FamilyUser.destroy({
+            where: {
+                familyId: req.params.id,
+            }
+        }).then(data => {
+            res.status(201).json({ message: 'FAMILY_FOUND'})
+        }).catch(err => {
+            res.status(422).json(err)
+        })
+    }).catch(err => {
+        res.status(422).json({ message: 'FAMILY_DOESNT_EXIST' })
+    })
+})
 app.listen(3000)
 
