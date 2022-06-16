@@ -37,7 +37,7 @@ describe('Add user to an existing family', () => {
             })
     })
 
-    it('return 201 if user was created', (done) => {
+    it('return 201 if the user was created', (done) => {
         axios.post(
             'http://localhost:3000/users',
             {
@@ -56,7 +56,7 @@ describe('Add user to an existing family', () => {
             })
     })
 
-    it('return 201 if user with the same email was NOT created', (done) => {
+    it('return 201 if an user with the same email was NOT created', (done) => {
         axios.post(
             'http://localhost:3000/users',
             {
@@ -89,7 +89,7 @@ describe('Add user to an existing family', () => {
         })
     })
 
-    it('return 422 if family doesn´t exist', (done) => {
+    it('return 422 if the family doesn´t exist', (done) => {
         axios.post(
             'http://localhost:3000/familyUsers',
             {
@@ -130,6 +130,20 @@ describe('Add user to an existing family', () => {
             }
         ).catch(err => {
             assert.equal(err.response.data.message, 'ALREADY_JOINED_FAMILY')
+            done()
+        })
+    })
+
+    it('returns 200 if the family was deleted', (done) => {
+        axios.delete(
+            'http://localhost:3000/families/' + famId, {
+        }).then(response => {
+            assert.equal(response.status, 201)
+            console.log("hola")
+            done()
+        }).catch(err => {
+            assert.equal(err.response.status, 422)
+            console.log("chau")
             done()
         })
     })
