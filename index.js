@@ -9,33 +9,9 @@ const { ShoppingList, Product, ProductCategory, ListedProduct, ShoppingListCateg
 
 
 app.get('/', function (req, res) {
-    res.send('hello')
+    res.send('Welcome to the ListApp API')
 })
 
-///products?productCategoryId=1
-
-/*app.get('/products', async function (req, res) {
-    let q = {};
-
-    if (req.query.productCategoryId) {
-        q.productCategoryId = req.query.productCategoryId
-    }
-
-    let data = await Product.findAll({
-        attributes: ['id', 'name', 'brand', 'price', 'content'],
-        where: q,
-        include: [{
-            model: ContentMeassure,
-            attributes: ["meassure"],
-        },
-        {
-            model: ProductCategory,
-            attributes: ["category"],
-
-        }]
-    })
-    res.send(data)
-})*/
 app.get('/products', async function (req, res) {
     let q = {};
     let data;
@@ -151,7 +127,6 @@ app.post('/products', async function (req, res) {
         res.status(422).json(err)
     })
 })
-
 
 app.patch('/listed-products/:id', async function (req, res) {
     let cantidad = req.body.cantidad
@@ -379,7 +354,6 @@ app.post('/familyUsers', async function (req, res) {
     })
 })
 
-
 app.post('/users', async function (req, res) {
     let userName = req.body.name
     let userEmail = req.body.email
@@ -425,7 +399,6 @@ app.get('/family', async function (req, res) {
     res.send(data)
 })
 
-
 app.delete('/shopping-lists/:id', async function (req, res) {
     ShoppingList.destroy({
         where: {
@@ -445,7 +418,6 @@ app.delete('/shopping-lists/:id', async function (req, res) {
         res.status(422).json({ message: 'LIST_DOESNT_EXIST' })
     })
 })
-
 
 app.delete('/listed-products/:id', async function (req, res) {
 
@@ -491,22 +463,6 @@ app.delete('/products/:id', async function (req, res) {
 
 })
 
-/* app.get('/realizar-compra', async function (req, res) {
-    let q = {};
-    let data;
-    let trajoNombre = false;
-    if (req.query.name) {
-        q.name = { [Op.substring]: req.query.name };
-        trajoNombre = true;
-    }
-    data = await Family.findAll({
-        where: q
-    });
-    if (trajoNombre && data == 0) {
-        return res.status(422).json({ message: 'FAMILY_DOESNT_EXIST' })
-    }
-    res.send(data)
-}) */
 app.get('/virtual-cupboard', async function (req, res) {
     let q = {};
     q.familyId = req.query.familyId;
