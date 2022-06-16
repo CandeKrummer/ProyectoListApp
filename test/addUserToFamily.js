@@ -139,11 +139,21 @@ describe('Add user to an existing family', () => {
             'http://localhost:3000/families/' + famId, {
         }).then(response => {
             assert.equal(response.status, 201)
-            console.log("hola")
             done()
         }).catch(err => {
             assert.equal(err.response.status, 422)
-            console.log("chau")
+            done()
+        })
+    })
+
+    it('returns 200 if the user was deleted', (done) => {
+        axios.delete(
+            'http://localhost:3000/users/' + userId, {
+        }).then(response => {
+            assert.equal(response.status, 201)
+            done()
+        }).catch(err => {
+            assert.equal(err.response.status, 422)
             done()
         })
     })

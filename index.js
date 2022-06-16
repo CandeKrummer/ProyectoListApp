@@ -508,10 +508,10 @@ app.delete('/products/:id', async function (req, res) {
     res.send(data)
 }) */
 app.get('/virtual-cupboard', async function (req, res) {
-    let q = {}; 
-    q.familyId = req.query.familyId; 
+    let q = {};
+    q.familyId = req.query.familyId;
     q.name = 'Alacena Virtual';
-   let data = await  ShoppingList.findAll({
+    let data = await ShoppingList.findAll({
         where: q
     });
     res.send(data)
@@ -523,17 +523,45 @@ app.delete('/families/:id', async function (req, res) {
             id: req.params.id,
         }
     }).then(data => {
-        FamilyUser.destroy({
+        ShoppingList.destroy({
             where: {
                 familyId: req.params.id,
             }
         }).then(data => {
-            res.status(201).json({ message: 'FAMILY_FOUND'})
+            FamilyUser.destroy({
+                where: {
+                    familyId: req.params.id,
+                }
+            }).then(data => {
+                res.status(201).json({ message: 'FAMILY_FOUND' })
+            }).catch(err => {
+                res.status(422).json(err)
+            })
         }).catch(err => {
             res.status(422).json(err)
         })
     }).catch(err => {
         res.status(422).json({ message: 'FAMILY_DOESNT_EXIST' })
+    })
+})
+
+app.delete('/users/:id', async function (req, res) {
+    User.destroy({
+        where: {
+            id: req.params.id,
+        }
+    }).then(data => {
+        FamilyUser.destroy({
+            where: {
+                userId: req.params.id,
+            }
+        }).then(data => {
+            res.status(201).json({ message: 'USER_FOUND' })
+        }).catch(err => {
+            res.status(422).json(err)
+        })
+    }).catch(err => {
+        res.status(422).json({ message: 'USER_DOESNT_EXIST' })
     })
 })
 
