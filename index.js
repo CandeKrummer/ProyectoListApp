@@ -290,6 +290,7 @@ app.post('/families', async function (req, res) {
             createdAt: new Date,
             updatedAt: new Date,
         }).then(data => {
+            let listaDeComprasId = data.id
             ShoppingList.create({
                 name: 'Alacena Virtual',
                 listCategoryId: 2,
@@ -297,7 +298,8 @@ app.post('/families', async function (req, res) {
                 createdAt: new Date,
                 updatedAt: new Date,
             }).then(data => {
-                res.status(201).json({ familyId: famId })
+                let alacenaVirtualId = data.id
+                res.status(201).json({ familyId: famId, listaDeComprasId: listaDeComprasId, alacenaVirtualId: alacenaVirtualId })
             }).catch(err => {
                 res.status(422).json(err)
             })
@@ -463,9 +465,19 @@ app.delete('/products/:id', async function (req, res) {
 
 })
 
-app.get('/virtual-cupboard', async function (req, res) {
+app.get('/virtual-cupboard/:familyId', async function (req, res) {
+    let count = await Family.count({
+        where: {
+            id: req.params.familyId
+        }
+    })
+
+    if (count == 0) {
+        return res.status(422).json({ message: 'FAMILY_DOESNT_EXIST' })
+    }
+
     let q = {};
-    q.familyId = req.query.familyId;
+    q.familyId = req.params.familyId;
     q.name = 'Alacena Virtual';
     let data = await ShoppingList.findAll({
         where: q
@@ -519,6 +531,96 @@ app.delete('/users/:id', async function (req, res) {
     }).catch(err => {
         res.status(422).json({ message: 'USER_DOESNT_EXIST' })
     })
+})
+
+//Saca los productos de la lista de compras y los pone en la alacena virtual
+app.patch('/realizar-compra/:familyId', async function (req, res) {
+    let countFamilia = await Family.count({
+        where: {
+            id: req.params.familyId
+        }
+    })
+
+    if (countFamilia == 0) {
+        return res.status(422).json({ message: 'FAMILY_DOESNT_EXIST' })
+    }
+
+    let listaDeComprasId;
+    let alacenaVirtualId;
+
+    let listaDeCompras = await ShoppingList.findOne({
+        where: {
+            familyId: req.params.familyId,
+            name: 'Lista de Compras'
+        }
+    });
+    listaDeComprasId = listaDeCompras.id;
+
+    //busco la alacena virtual de la familia
+    let alacenaVirtual = await ShoppingList.findOne({
+        where: {
+            familyId: req.params.familyId,
+            name: 'Alacena Virtual'
+        }
+    })
+    alacenaVirtualId = alacenaVirtual.id;
+
+    //me fijo cuántos productos tiene la lista de compras
+    cantProdLdc = await ListedProduct.count({
+        where: {
+            ShoppingListId: listaDeCompras.id,
+        }
+    })
+
+    if (cantProdLdc == 0) {
+        return res.status(422).json({ message: 'EMPTY_SHOPPING_LIST' })
+    }
+
+    //traigo los productos de la lista
+    let productosEnLista = await ListedProduct.findAll({
+        where: {
+            ShoppingListId: listaDeCompras.id,
+        }
+    })
+
+    let cantProductos = 0;
+    for (let i = 0; i < productosEnLista.length; i++) {
+        cantProductos = await ListedProduct.count({
+            where: {
+                ShoppingListId: alacenaVirtualId,
+                ProductId: productosEnLista[i].ProductId
+            }
+        })
+
+        if (cantProductos == 0) {
+            await ListedProduct.create({
+                ShoppingListId: alacenaVirtualId,
+                ProductId: productosEnLista[i].ProductId,
+                cantidad: productosEnLista[i].cantidad,
+            })
+        } else {
+            let lp;
+            lp = await ListedProduct.findOne({
+                where: {
+                    ShoppingListId: alacenaVirtualId,
+                    ProductId: productosEnLista[i].ProductId
+                }
+            })
+            lp.cantidad += productosEnLista[i].cantidad;
+            lp.save()
+        }
+
+        let lpListaDeCompras = await ListedProduct.findOne({
+            where: {
+                ShoppingListId: listaDeComprasId,
+                ProductId: productosEnLista[i].ProductId
+            }
+        })
+        await lpListaDeCompras.destroy()
+
+        cantProductos = 0;
+    }
+    res.status(201).json({ message: 'PRODUCTS_MOVED_SUCCESFULLY' })
 })
 
 app.listen(3000)

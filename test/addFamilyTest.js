@@ -9,7 +9,8 @@ app.use(express.urlencoded({ extended: true })) */
 
 const { assert } = chai;
 
-describe('Add Family', (done) => {
+describe('Add Family', () => {
+    let famId;
     it('returns 201 if the family was created', (done) => {
         axios.post(
             'http://localhost:3000/families',
@@ -19,16 +20,14 @@ describe('Add Family', (done) => {
                 number: "4343-4343",
                 password: "garcia20"
             }
-        )
-            .then(response => {
-                assert.equal(response.status, 201)
-                console.log(response.status)
-                done()
-            }).catch(err => {
-                assert.equal(err.response.status, 422)
-                console.log(err.response.status)
-                done()
-            })
+        ).then(response => {
+            assert.equal(response.status, 201)
+            famId = response.data.familyId
+            done()
+        }).catch(err => {
+            assert.equal(err.response.status, 422)
+            done()
+        })
     })
 
     it('returns 422 if the family exists', (done) => {
@@ -43,15 +42,13 @@ describe('Add Family', (done) => {
             },
         ).catch(err => {
             assert.equal(err.response.data.message, "FAMILY_EXISTS")
-            console.log(err.response.status + ' ' + err.response.data.message)
             done()
         })
     })
 
-    // eliminar familia
-    it('returns 201 if the family was deleted', () => {
+    it('returns 200 if the family was deleted', (done) => {
         axios.delete(
-            'http://localhost:3000/families/' + 5, {
+            'http://localhost:3000/families/' + famId, {
         }).then(response => {
             assert.equal(response.status, 201)
             done()
@@ -60,9 +57,10 @@ describe('Add Family', (done) => {
             done()
         })
     })
-    it('returns 422 if the family doesnt exist', () => {
+
+    it('returns 422 if the family doesnt exist', (done) => {
         axios.delete(
-            'http://localhost:3000/families/' + 748, {
+            'http://localhost:3000/families/' + -1, {
         }).then(response => {
             assert.equal(response.status, 201)
             done()
